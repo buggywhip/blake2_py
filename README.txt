@@ -1,10 +1,11 @@
 
     blake2.py  --  version 1, beta 1
     
-    
-    This 100% Python implementation of BLAKE2 supports both 
+    This pure Python implementation of BLAKE2 supports both 
     BLAKE2b and BLAKE2s.  It runs under both Python 2.7 and 
-    Python 3.3.
+    Python 3.3.  For information about the BLAKE2 algorithm 
+    please see https://blake2.net
+    
     
     Here a simple usage example:
         
@@ -42,12 +43,12 @@
       
       - under Python 2.7 the returned digest is a str; under 
         Python 3.3 the digest is a bytes object.  Neither is 
-        a hash object.
+        a pyblake2 hash object.
       
       - hexdigest() returns a str under Pythons 2.7 and 3.3
       
       - http://pythonhosted.org/pyblake2/module.html#pyblake2.hash.digest
-        says "Return the digest of the data so far." which 
+        says "Return the digest of the data so far" which 
         implies hashing may be resumed after a digest is 
         retrieved at some arbitrary interim point.  What really 
         happens is that when final() is called, padding is 
@@ -59,13 +60,13 @@
         should NOT be permitted, hence blake2.py will throw an 
         exception if resumption is attempted.  
         
-        Arguably, a better approach would be to make a copy by 
-        calling copy() and then call digest() or hexdigest() on 
-        the copy, and resume hashing on the original.  
+        Arguably, a better approach would be to make a deepcopy 
+        by calling copy() and then call digest() or hexdigest() 
+        on the copy, and resume hashing on the original.  
         
-        Note: digest() and hexdigest() may be called multiple 
-        times when finished hashing.  Each calls final(), but 
-        final() performs the final compression only once.  
+      - digest() and hexdigest() may be called multiple times 
+        when finished hashing.  Each calls final(), but final() 
+        performs the final compression only once.  
     
     
     Other notes:
@@ -77,8 +78,8 @@
       - blake2.py has been tested in sequential and tree modes; 
         it has NOT been tested in parallel mode.
         
-      - blake2.py is not a secure implementation.  For example, 
-        keys are NOT securely overwritten after use.  Use this 
+      - blake2.py is NOT a secure implementation.  For example, 
+        keys are not securely overwritten after use.  Use this 
         implementation on a presumably secure platform only.
     
     
@@ -103,6 +104,11 @@
       BLAKE2b   CPython 3.3.3        25m   93.269 secs   1.5x
       BLAKE2b   PyPy 2.0.2 (2.7.3)   25m   39.099 secs   3.5x
                               ...or about 640,000 bytes per second
+    
+    *** AFTER G() optimizations (on miniServer) ***
+      python2.7  BLAKE2b  1 MiB  4.254 secs  0.24 MiB per sec
+      python3.3  BLAKE2b  1 MiB  2.719 secs  0.37 MiB per sec
+    
     -----
     
     Early "godspeed" (4.4GHz i5-3570K) results:
@@ -112,13 +118,16 @@
       BLAKE2b   CPython 3.2.3        25m   39.361 secs   1.2x
       BLAKE2b   PyPy 2.0.2 (2.7.3)   25m   26.128 secs   1.8x
     
-    -----
-    
-    *** AFTER G() optimizations (on miniServer) ***
-      python2.7  BLAKE2b  1 MiB  4.254 secs  0.24 MiB per sec
-      python3.3  BLAKE2b  1 MiB  2.719 secs  0.37 MiB per sec
+    *** AFTER G() optimizations (on godspeed) ***
+      python2.7  BLAKE2b  1 MiB  1.380 secs  0.72 MiB per sec
+      python3.2  BLAKE2b  1 MiB  1.185 secs  0.84 MiB per sec
+      pypy (2.7) BLAKE2b  1 MiB  1.145 secs  0.88 MiB per sec
       
-      ...still slow.  :-/
+      python2.7  BLAKE2b 25 MiB 34.592 secs  0.72 MiB per sec
+      python3.3  BLAKE2b 25 MiB 29.441 secs  0.84 MiB per sec
+      pypy (2.7) BLAKE2b 25 MiB 26.101 secs  0.96 MiB per sec
+    
+      ...still [very] slow.  :-/
 
     -----
     
