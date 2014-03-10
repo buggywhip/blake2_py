@@ -2,41 +2,9 @@
 
 doc = """
     
-    bench_blake2.py  --  version 1, beta 1
+    bench_blake2.py  --  version 1
         
-    Early "miniServer" (2.53GHz Core2Duo) results:
-      no special optimizations while running with other apps
-    
-      BLAKE2s   CPython 2.7.3         1m    9.871 secs   1.0
-      BLAKE2s   CPython 3.3.3         1m    5.742 secs   1.7x
-      BLAKE2s   PyPy 2.0.2 (2.7.3)    1m    2.543 secs   3.9x
-    
-
-      BLAKE2b   CPython 2.7.3         1m    5.552 secs   1.0
-      BLAKE2b   CPython 3.3.3         1m    3.714 secs   1.5x
-      BLAKE2b   PyPy 2.0.2 (2.7.3)    1m    1.830 secs   3.0x
-    
-      BLAKE2b   CPython 2.7.3        25m  137.655 secs   1.0
-      BLAKE2b   CPython 3.3.3        25m   93.269 secs   1.5x
-      BLAKE2b   PyPy 2.0.2 (2.7.3)   25m   39.099 secs   3.5x
-                              ...or about 640,000 bytes per second
-    -----
-    
-    Early "godspeed" (4.4GHz i5-3570K) results:
-      no special optimizations 
-
-      BLAKE2b   CPython 2.7.3        25m   47.573 secs   1.0
-      BLAKE2b   CPython 3.2.3        25m   39.361 secs   1.2x
-      BLAKE2b   PyPy 2.0.2 (2.7.3)   25m   26.128 secs   1.8x
-    
-    -----
-    
-    *** AFTER G() optimizations (on miniServer) ***
-      python2.7  BLAKE2b  1 MiB  4.254 secs  0.24 MiB per sec
-      python3.3  BLAKE2b  1 MiB  2.719 secs  0.37 MiB per sec
-      
-      ...still slow.  :-/
-
+    see blake2.py's README for more information.
     
     Enjoy,
         

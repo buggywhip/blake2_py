@@ -1,41 +1,30 @@
 
-    blake2.py  --  version 1, beta 1
+    blake2.py  --  version 1
     
     This pure Python implementation of BLAKE2 supports both 
     BLAKE2b and BLAKE2s.  It runs under both Python 2.7 and 
     Python 3.3.  For information about the BLAKE2 algorithm 
     please see https://blake2.net
     
-    
-    Here a simple usage example:
-        
-        import blake2
-        
-        digest = blake2.BLAKE2b(b'hello world').digest()
-    
-    
-    Another, generating a 20-byte digest (in hex):
-        
-        from blake2 import BLAKE2b
-        
-        data = b'hello world'
-        b2 = BLAKE2b(digest_size=20)
-        b2.update(data)
-        hexdigest = b2.hexdigest()
-    
+    blake2.py differs from the structure of the C reference 
+    version primarily by effecting classes (object orientation) 
+    and certain optimizations in the area of compress() and 
+    G().  The goal of these optimizations was to improve 
+    performance, and while a gain of about 50% was attained, 
+    this program is way too slow to be competitive with C 
+    implementations.  This program can be useful, however, 
+    where a pure Python implementation is required, where the 
+    data to be hashed is small, and, of course, for educational 
+    purposes.  
     
     Credit is given to Dmitry Chestnykh <dmitry@codingrobots.com> 
     for his work defining a Python API for pyblake2 and his 
     excellent documentation of that interface.  Please see 
-    http://pythonhosted.org/pyblake2/
+    http://pythonhosted.org/pyblake2/  
     
     I have adoped much of Dmitry's API and many of his data 
-    names.  Consider using blake2.py when you need a pure Python 
-    implementation, and convert to Dmitry's pyblake2, with 
-    hopefully minimum effort, when more speed is required.
-    
-    Here are a few known differences between blake2.py and 
-    pyblake2.
+    names.  Here are a few known differences between blake2.py 
+    and pyblake2.
     
       - capitalization of BLAKE2b and BLAKE2s class names
       
@@ -83,52 +72,52 @@
         implementation on a presumably secure platform only.
     
     
-    TODO:
-        - test against KATs
+    Simple usage example:
         
+        import blake2
+        
+        digest = blake2.BLAKE2b(b'hello world').digest()
+    
+    
+    Another, generating a 20-byte digest (in hex):
+        
+        from blake2 import BLAKE2b
+        
+        data1 = b'hello '
+        data2 = b'world'
+        b2 = BLAKE2b(digest_size=20)
+        b2.update(data1)
+        b2.update(data2)
+        hexdigest = b2.hexdigest()
+    
+            
     -----
     
-    Early "miniServer" (2.53GHz Core2Duo) results:
-      no special optimizations while running with other apps
     
-      BLAKE2s   CPython 2.7.3         1m    9.871 secs   1.0
-      BLAKE2s   CPython 3.3.3         1m    5.742 secs   1.7x
-      BLAKE2s   PyPy 2.0.2 (2.7.3)    1m    2.543 secs   3.9x
+    "miniServer" BLAKE2b thruput (OSX 2.53GHz Core2Duo):
+       MiB/sec
+        0.22  python 2.7, blake2.py v2
+        0.36  python 3.3, blake2.py v2
+        0.60  pypy 2.2 (python 2.7), blake2.py v2
+        
+        0.35  python 2.7, cythonized blake2.py v2
+        0.59  python 3.3, cythonized blake2.py v2
+        1.99  python 2.7, cython + some cdef unsigned long long
     
+ >>>  301.01  python 2.7, Dmitry's pyblake2 wrapper  <<<
 
-      BLAKE2b   CPython 2.7.3         1m    5.552 secs   1.0
-      BLAKE2b   CPython 3.3.3         1m    3.714 secs   1.5x
-      BLAKE2b   PyPy 2.0.2 (2.7.3)    1m    1.830 secs   3.0x
-    
-      BLAKE2b   CPython 2.7.3        25m  137.655 secs   1.0
-      BLAKE2b   CPython 3.3.3        25m   93.269 secs   1.5x
-      BLAKE2b   PyPy 2.0.2 (2.7.3)   25m   39.099 secs   3.5x
-                              ...or about 640,000 bytes per second
-    
-    *** AFTER G() optimizations (on miniServer) ***
-      python2.7  BLAKE2b  1 MiB  4.254 secs  0.24 MiB per sec
-      python3.3  BLAKE2b  1 MiB  2.719 secs  0.37 MiB per sec
-    
-    -----
-    
-    Early "godspeed" (4.4GHz i5-3570K) results:
-      no special optimizations 
-
-      BLAKE2b   CPython 2.7.3        25m   47.573 secs   1.0
-      BLAKE2b   CPython 3.2.3        25m   39.361 secs   1.2x
-      BLAKE2b   PyPy 2.0.2 (2.7.3)   25m   26.128 secs   1.8x
-    
-    *** AFTER G() optimizations (on godspeed) ***
-      python2.7  BLAKE2b  1 MiB  1.380 secs  0.72 MiB per sec
-      python3.2  BLAKE2b  1 MiB  1.185 secs  0.84 MiB per sec
-      pypy (2.7) BLAKE2b  1 MiB  1.145 secs  0.88 MiB per sec
-      
-      python2.7  BLAKE2b 25 MiB 34.592 secs  0.72 MiB per sec
-      python3.3  BLAKE2b 25 MiB 29.441 secs  0.84 MiB per sec
-      pypy (2.7) BLAKE2b 25 MiB 26.101 secs  0.96 MiB per sec
-    
+    "godspeed" BLAKE2b thruput (Ubuntu 12.4LTS 4.4GHz i5-3570K):
+       MiB/sec
+        0.72  python 2.7, blake2.py v2
+        0.84  python 3.2, blake2.py v2
+        0.96  pypy 2.2 (python 2.7), blake2.py v2
+          
       ...still [very] slow.  :-/
-
+    
+    Consider using blake2.py when you need a pure Python 
+    implementation, and convert to Dmitry's pyblake2, with 
+    hopefully minimum effort, when more speed is required.
+    
     -----
     
     This copyright and license may change for future 
@@ -150,6 +139,7 @@
         
     Larry Bugbee
     December 2013
+    rev Mar 2014
 
 
 

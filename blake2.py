@@ -3,8 +3,7 @@
 
 doc = """
     
-    blake2.py  --  version 1, beta 1
-    
+    blake2.py  --  version 1
     
     This 100% Python implementation of BLAKE2 supports both 
     BLAKE2b and BLAKE2s.  It runs under both Python 2.7 and 

@@ -2,12 +2,12 @@
 
 doc = """
     
-    demo_blake2.py  --  version 1, beta 1
+    demo_blake2.py  --  version 1
     
     
     this runs under Python 2.7 and Python 3.3.
     
-    see blake2.py's doc for more information.
+    see blake2.py's README for more information.
     
     Notes:
         1- printed output prefixed with:
@@ -45,6 +45,14 @@ from blake2 import BLAKE2b, BLAKE2s
 
 #-----------------------------------------------------------------------
 
+def print_compare_results(actual, expect):
+    print('  ??? %s' % actual)
+    print('  >>> %s' % expect)
+    if actual != expect:
+        print('         *** results do NOT agree ***')
+    
+#-----------------------------------------------------------------------
+
 def demo_bfile(filename='blake2.py'):
     digest_size = 32
     
@@ -75,11 +83,10 @@ def demo_b():
     b2.update(data)
     digest = b2.final()
     
-    print('  ??? %s' % binascii.hexlify(digest).decode())
-    print('  ??? %s' % b2.hexdigest())
-    print('  >>> '
-        + 'e4cfa39a3d37be31c59609e807970799caa68a19bfaa15135f165085e01d41a6'
-        + '5ba1e1b146aeb6bd0092b49eac214c103ccfa3a365954bbbe52f74a2b3620c94')
+    actual = binascii.hexlify(digest).decode()      # or b2.hexdigest()
+    expect = ('e4cfa39a3d37be31c59609e807970799caa68a19bfaa15135f165085e01d41a6'
+            + '5ba1e1b146aeb6bd0092b49eac214c103ccfa3a365954bbbe52f74a2b3620c94')
+    print_compare_results(actual, expect)
 
 
 #-----------------------------------------------------------------------
@@ -97,10 +104,10 @@ def demo_bk():
     b2.update(data)
     digest = b2.final()
     
-    print('  ??? %s' % binascii.hexlify(digest).decode())
-    print('  >>> '
-        + '6edf9aa44dfc7590de00fcfdbe2f0d917cdeeb170301416929cc625d19d24edc'
-        + '1040ff760c1f9bb61ad439a0af5d492fbb01b46ed3feb4e6076383b7885a9486')
+    actual = binascii.hexlify(digest).decode()      # or b2.hexdigest()
+    expect = ('6edf9aa44dfc7590de00fcfdbe2f0d917cdeeb170301416929cc625d19d24edc'
+            + '1040ff760c1f9bb61ad439a0af5d492fbb01b46ed3feb4e6076383b7885a9486')
+    print_compare_results(actual, expect)
 
 #-----------------------------------------------------------------------
 
@@ -120,11 +127,10 @@ def demo_bksp():
     b2.update(data)
     digest = b2.final()
     
-    print('  salt = "%s",  person = "%s"' % (salt, person))
-    print('  ??? %s' % binascii.hexlify(digest).decode())
-    print('  >>> '
-        + '99e200174f8abe9ee0d4103fc5be406907d4c5a49fa670ad4cc4a932044bf435'
-        + '04bce8f0bc3e8b3f7ece823ad433fe76e21208f7dea2deeaa0d32d0d14947035')
+    actual = binascii.hexlify(digest).decode()      # or b2.hexdigest()
+    expect = ('99e200174f8abe9ee0d4103fc5be406907d4c5a49fa670ad4cc4a932044bf435'
+            + '04bce8f0bc3e8b3f7ece823ad433fe76e21208f7dea2deeaa0d32d0d14947035')
+    print_compare_results(actual, expect)
 
 #-----------------------------------------------------------------------
 
@@ -237,10 +243,10 @@ perish from the earth.
     b2.update(data)
     digest = b2.final()
     
-    print('  ??? %s' % binascii.hexlify(digest).decode())
-    print('  >>> '
-        + 'd1e31c4b3b68a12bf6df4a35b94feb2409ba8dd0b1a19ca0cb4aebce518ed8d5'
-        + '2d860c22db39f297483eead5b4e8f2bda955da2b22eb08bcf4e3b047906a757f')
+    actual = binascii.hexlify(digest).decode()      # or b2.hexdigest()
+    expect = ('d1e31c4b3b68a12bf6df4a35b94feb2409ba8dd0b1a19ca0cb4aebce518ed8d5'
+            + '2d860c22db39f297483eead5b4e8f2bda955da2b22eb08bcf4e3b047906a757f')
+    print_compare_results(actual, expect)
 
 
 #-----------------------------------------------------------------------
@@ -336,7 +342,7 @@ if __name__ == '__main__':
         demo_sk()
         demo_sksp()
 
-    if 0:
+    if 1:
         # > 1blk
         demo_b2()
     #    demo_bfile()
