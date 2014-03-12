@@ -96,21 +96,21 @@
     
     "miniServer" BLAKE2b thruput (OSX 2.53GHz Core2Duo):
        MiB/sec
-        0.22  python 2.7, blake2.py v2
-        0.36  python 3.3, blake2.py v2
-        0.60  pypy 2.2 (python 2.7), blake2.py v2
+        0.22  python 2.7, blake2.py v1
+        0.36  python 3.3, blake2.py v1
+        0.60  pypy 2.2 (python 2.7), blake2.py v1
         
-        0.35  python 2.7, cythonized blake2.py v2
-        0.59  python 3.3, cythonized blake2.py v2
+        0.35  python 2.7, cythonized blake2.py v1
+        0.59  python 3.3, cythonized blake2.py v1
         1.99  python 2.7, cython + some cdef unsigned long long
     
  >>>  301.01  python 2.7, Dmitry's pyblake2 wrapper  <<<
 
     "godspeed" BLAKE2b thruput (Ubuntu 12.4LTS 4.4GHz i5-3570K):
        MiB/sec
-        0.72  python 2.7, blake2.py v2
-        0.84  python 3.2, blake2.py v2
-        0.96  pypy 2.2 (python 2.7), blake2.py v2
+        0.72  python 2.7, blake2.py v1
+        0.84  python 3.2, blake2.py v1
+        0.96  pypy 2.2 (python 2.7), blake2.py v1
           
       ...still [very] slow.  :-/
     
@@ -123,7 +123,7 @@
     This copyright and license may change for future 
     versions.  Until then...
     
-      Copyright (c) 2013 by Larry Bugbee, Kent, WA
+      Copyright (c) 2013-2014 by Larry Bugbee, Kent, WA
       ALL RIGHTS RESERVED.
       
       blake2.py IS EXPERIMENTAL SOFTWARE FOR EDUCATIONAL
