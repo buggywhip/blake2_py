@@ -147,4 +147,10 @@
     rev Mar 2014, Mar 2018
 
 
-
+PS: If you are interested in a 100% Python implementation of the 
+    original BLAKE hash algorithm, predecessor to BLAKE2, submitted 
+    to and a finalist in the NIST SHA3 competition, go to:    
+        http://www.seanet.com/~bugbee/crypto/blake/
+    
+    
+    
